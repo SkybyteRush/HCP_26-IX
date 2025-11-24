@@ -95,25 +95,17 @@ nav ul li a:hover {
 }
 
 /* ------------------------------------------- */
-/* ৪. সেকশন এবং হিরো এরিয়া (স্ক্রোল অ্যানিমেশন) */
+/* ৪. সেকশন এবং হিরো এরিয়া */
 /* ------------------------------------------- */
 
-/* সমস্ত কন্টেন্ট সেকশনের জন্য প্রাথমিক অবস্থা */
+/* ScrollReveal ব্যবহার করার কারণে পুরোনো fade-in ক্লাসটি দরকার নেই */
 .content-section {
     padding: 60px 20px;
     max-width: 1000px;
     margin: 0 auto;
     text-align: center;
-    opacity: 0; 
-    transform: translateY(30px); 
-    transition: opacity 1s ease-out, transform 1s ease-out; 
 }
 
-/* যখন JavaScript ক্লাস যোগ করবে, তখন দৃশ্যমান হবে */
-.content-section.fade-in {
-    opacity: 1;
-    transform: translateY(0);
-}
 
 /* হোম বিভাগ (হিরো সেকশন) */
 .hero-section {
@@ -240,7 +232,7 @@ nav ul li a:hover {
     box-shadow: 0 8px 16px rgba(0, 128, 0, 0.3); /* সবুজ হোভার শ্যাডো */
 }
 
-/* image-placeholder এর স্টাইল (ভিডিও লোড না হওয়া পর্যন্ত) */
+/* image-placeholder এর স্টাইল */
 .image-placeholder {
     background-color: #d9ead3; 
     border: 1px dashed #6aa84f;
