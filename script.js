@@ -1,7 +1,7 @@
 // পার্টির তারিখ সেট করো: 17 ডিসেম্বর, 2026, সকাল 9:00 টা 
 const partyDate = new Date("Dec 17, 2026 09:00:00").getTime();
 
-// --- কাউন্টডাউন টাইমার ফাংশন ---
+// --- ১. কাউন্টডাউন টাইমার ফাংশন ---
 const countdown = setInterval(function() {
     const now = new Date().getTime();
     const distance = partyDate - now;
@@ -26,41 +26,16 @@ const countdown = setInterval(function() {
 }, 1000); 
 
 
-// --- স্ক্রোল অ্যানিমেশন ফাংশন (Animation on Scroll) ---
-
-const contentSections = document.querySelectorAll('.content-section');
-
-function checkVisibility() {
-    // প্রতিটা সেকশনের জন্য চেক করা হবে
-    contentSections.forEach(section => {
-        // সেকশনের উপরের প্রান্ত স্ক্রিনের নিচে থেকে কত দূরে
-        const sectionTop = section.getBoundingClientRect().top;
-        
-        // যদি সেকশনটি স্ক্রিনের মাঝামাঝি চলে আসে (অর্থাৎ 80% ভিউপোর্ট উচ্চতার উপরে)
-        if (sectionTop < window.innerHeight * 0.8) {
-            section.classList.add('fade-in'); // CSS ক্লাস যোগ করা হলো
-        }
-    });
-}
-
-// লোড হওয়ার সময় একবার এবং স্ক্রোল করার সময় ফাংশনটি চালানো
-window.addEventListener('scroll', checkVisibility);
-window.addEventListener('load', checkVisibility);
-
-
-// --- 🌟 Lightbox কার্যকারিতা 🌟 ---
+// --- ২. Lightbox কার্যকারিতা ---
 
 const lightbox = document.getElementById('lightbox');
 const lightboxContent = document.querySelector('.lightbox-content');
 const closeBtn = document.querySelector('.lightbox-close');
-const galleryItems = document.querySelectorAll('.gallery-media'); // গ্যালারির সব ছবি ও ভিডিও সিলেক্ট করা হলো
+const galleryItems = document.querySelectorAll('.gallery-media'); 
 
-// ১. Lightbox খোলার ফাংশন
 function openLightbox(mediaSrc, mediaType) {
-    // আগের কন্টেন্ট পরিষ্কার করা
     lightboxContent.innerHTML = ''; 
     
-    // ছবি অথবা ভিডিও ট্যাগ তৈরি করা
     if (mediaType === 'IMG') {
         const img = document.createElement('img');
         img.src = mediaSrc;
@@ -69,27 +44,23 @@ function openLightbox(mediaSrc, mediaType) {
         const video = document.createElement('video');
         video.src = mediaSrc;
         video.setAttribute('controls', 'true');
-        video.setAttribute('autoplay', 'true'); // স্বয়ংক্রিয়ভাবে প্লে শুরু হবে
-        video.loop = true; // লুপ করা ভালো অভিজ্ঞতার জন্য
+        video.setAttribute('autoplay', 'true'); 
+        video.loop = true; 
         lightboxContent.appendChild(video);
     }
     
-    // Lightbox দেখানো
     lightbox.style.display = 'block';
 }
 
-// ২. গ্যালারি আইটেমগুলিতে ক্লিক লিসেনার যোগ করা
 galleryItems.forEach(item => {
     item.addEventListener('click', () => {
         let src = '';
         let type = '';
         
         if (item.tagName === 'IMG') {
-            // যদি ছবিটি হয়
             src = item.src;
             type = 'IMG';
         } else if (item.tagName === 'VIDEO') {
-            // যদি ভিডিও হয়, Source ট্যাগের src নিতে হবে
             const source = item.querySelector('source');
             if (source) {
                 src = source.src;
@@ -103,20 +74,51 @@ galleryItems.forEach(item => {
     });
 });
 
-
-// ৩. Lightbox বন্ধ করার জন্য ইভেন্ট লিসেনার
-// বন্ধ করার বাটন
 closeBtn.onclick = function() {
     lightbox.style.display = "none";
     // বন্ধ করার সময় ভিডিও প্লে হওয়া বন্ধ করতে হবে
     lightboxContent.innerHTML = ''; 
 }
 
-// স্ক্রিনের বাইরে ক্লিক করলে বন্ধ হবে
 lightbox.onclick = function(event) {
-    // যদি সরাসরি lightbox DIV-এ ক্লিক করা হয়, তবে বন্ধ করো
     if (event.target === lightbox) {
         lightbox.style.display = "none";
         lightboxContent.innerHTML = '';
     }
 }
+
+// --- ৩. ScrollReveal এর মাধ্যমে হেভি অ্যানিমেশন যোগ করা ---
+
+// ScrollReveal ইনিশিয়ালাইজ করা
+ScrollReveal({ 
+    distance: '60px', 
+    duration: 2000,   
+    easing: 'cubic-bezier(.5, 0, 0, 1)', 
+    reset: false      
+});
+
+// A. হিরো সেকশনের উপাদান
+ScrollReveal().reveal('.main-logo', { delay: 300, origin: 'top' });
+ScrollReveal().reveal('.hero-section h2', { delay: 500, origin: 'bottom', interval: 100 });
+ScrollReveal().reveal('.theme', { delay: 700, origin: 'left' });
+ScrollReveal().reveal('.time-box', { delay: 800, origin: 'top', interval: 150 }); 
+
+// B. ইভেন্টের বিবরণ সেকশন
+ScrollReveal().reveal('#description h2', { delay: 200, origin: 'left' });
+ScrollReveal().reveal('#description p', { delay: 400, origin: 'right' });
+ScrollReveal().reveal('.details-box', { delay: 600, origin: 'bottom', scale: 0.8 }); 
+
+// C. আয়োজক দল (Mastermind) সেকশন
+ScrollReveal().reveal('#masterminds h2', { delay: 200, origin: 'top' });
+ScrollReveal().reveal('.main-mastermind', { delay: 500, origin: 'left', rotate: { x: 90, z: 0 } }); 
+ScrollReveal().reveal('.co-mastermind-row .mastermind-card', { delay: 700, origin: 'bottom', interval: 150, scale: 0.9 }); 
+
+// D. গ্যালারি সেকশন
+ScrollReveal().reveal('#gallery h2', { delay: 200, origin: 'top' });
+ScrollReveal().reveal('.gallery-media', { 
+    delay: 400, 
+    origin: 'right', 
+    interval: 100, 
+    easing: 'ease-in-out',
+    duration: 1200
+});
