@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SECURE ZONE | ROBOTICS INTERFACE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon-blue: #00f2ff;
+            --dark-grey: #1a1a1b;
+            --robot-border: #333333;
+            --glow: rgba(0, 242, 255, 0.4);
+        }
+
+        body {
+            background-color: #0d0d0d;
+            color: #e0e0e0;
+            font-family: 'Rajdhani', sans-serif;
+            margin: 0; padding: 0;
+            overflow-x: hidden;
+            background-image: radial-gradient(circle at 2px 2px, #1a1a1a 1px, transparent 0);
+            background-size: 40px 40px;
+        }
+
+        /* 🔐 Password Overlay */
+        #auth-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            display: flex; justify-content: center; align-items: center;
+            z-index: 10000; backdrop-filter: blur(20px);
+        }
+
+        .auth-box {
+            background: var(--dark-grey);
+            border: 2px solid var(--neon-blue);
+            padding: 40px; border-radius: 5px;
+            text-align: center; box-shadow: 0 0 50px var(--glow);
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 85% 100%, 0 100%);
+        }
+
+        .auth-box h2 { font-family: 'Orbitron'; color: var(--neon-blue); letter-spacing: 5px; }
+
+        .robot-input {
+            background: #000; border: 1px solid var(--neon-blue);
+            padding: 15px; color: var(--neon-blue);
+            font-family: 'Orbitron'; text-align: center; font-size: 1.2rem;
+            width: 250px; outline: none; margin: 20px 0;
+        }
+
+        /* 🤖 Dashboard UI */
+        #secure-content { display: none; padding: 40px 20px; max-width: 1200px; margin: 0 auto; }
+
+        .system-header {
+            text-align: center; margin-bottom: 50px;
+            border-bottom: 2px solid var(--neon-blue); padding-bottom: 20px;
+        }
+
+        .system-header h1 { font-family: 'Orbitron'; font-size: 3rem; color: var(--neon-blue); text-shadow: 0 0 15px var(--neon-blue); }
+
+        /* 📊 Teacher Ranking Table */
+        .ranking-container {
+            background: rgba(26, 26, 27, 0.8);
+            border: 1px solid var(--robot-border);
+            padding: 30px; border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        }
+
+        .ranking-title { font-family: 'Orbitron'; color: var(--neon-blue); margin-bottom: 20px; border-left: 5px solid var(--neon-blue); padding-left: 15px; }
+
+        .voting-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+
+        .input-group { margin-bottom: 20px; }
+        .input-group label { display: block; margin-bottom: 8px; font-weight: bold; color: #888; }
+
+        select, .code-input {
+            width: 100%; padding: 12px; background: #000; border: 1px solid var(--robot-border);
+            color: #fff; border-radius: 5px; outline: none; transition: 0.3s;
+        }
+
+        select:focus, .code-input:focus { border-color: var(--neon-blue); box-shadow: 0 0 10px var(--glow); }
+
+        .submit-btn {
+            background: transparent; border: 2px solid var(--neon-blue);
+            color: var(--neon-blue); padding: 15px 40px; font-family: 'Orbitron';
+            font-weight: 900; cursor: pointer; border-radius: 5px;
+            transition: 0.4s; width: 100%; margin-top: 20px;
+        }
+
+        .submit-btn:hover { background: var(--neon-blue); color: #000; box-shadow: 0 0 30px var(--neon-blue); }
+
+        /* 📋 Codes Table (Hidden for Admins) */
+        .code-list { font-size: 0.8rem; color: #555; margin-top: 50px; text-align: center; }
+    </style>
+</head>
+<body>
+
+    <div id="auth-overlay">
+        <div class="auth-box">
+            <h2>SYSTEM ACCESS</h2>
+            <p>IDENTIFY YOURSELF, MASTERMIND</p>
+            <input type="password" id="sys-pass" class="robot-input" placeholder="ACCESS CODE">
+            <br>
+            <button class="submit-btn" onclick="login()">INITIALIZE SYSTEM</button>
+            <p id="err" style="color: #ff0055; margin-top: 15px; display: none;">ACCESS DENIED: INVALID CODE</p>
+        </div>
+    </div>
+
+    <div id="secure-content">
+        <div class="system-header">
+            <h1>PRIVATE DATABASE v2.0</h1>
+            <p>HCP 2026 | CLASS 9 SECURE PROTOCOL</p>
+        </div>
+
+        <div class="ranking-container">
+            <h3 class="ranking-title">TEACHER EVALUATION MODULE</h3>
+            
+            <form id="ranking-form">
+                <div class="voting-grid">
+                    <div class="user-id-section">
+                        <label>USER AUTHENTICATION (5-Digit Code):</label>
+                        <input type="text" id="stu-code" class="code-input" placeholder="#####" maxlength="5">
+                    </div>
+
+                    <div class="selectors">
+                        <div class="input-group">
+                            <label>01. RANK ONE (MASTER TEACHER):</label>
+                            <select id="r1">
+                                <option value="" disabled selected>Select Teacher</option>
+                                <option value="Teacher 1">Teacher 1</option>
+                                <option value="Teacher 2">Teacher 2</option>
+                                <option value="Teacher 3">Teacher 3</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label>02. RANK TWO:</label>
+                            <select id="r2">
+                                <option value="" disabled selected>Select Teacher</option>
+                                <option value="Teacher 1">Teacher 1</option>
+                                <option value="Teacher 2">Teacher 2</option>
+                                <option value="Teacher 3">Teacher 3</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label>03. RANK THREE:</label>
+                            <select id="r3">
+                                <option value="" disabled selected>Select Teacher</option>
+                                <option value="Teacher 1">Teacher 1</option>
+                                <option value="Teacher 2">Teacher 2</option>
+                                <option value="Teacher 3">Teacher 3</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" class="submit-btn" onclick="submitVote()">TRANSMIT DATA</button>
+                <div id="status" style="margin-top: 15px; text-align: center;"></div>
+            </form>
+        </div>
+
+        <div class="code-list">
+            <p>SYSTEM CODES GENERATED: HCP-A101 TO HCP-D409</p>
+            </div>
+    </div>
+
+    <script>
+        // System Login
+        function login() {
+            const pass = document.getElementById('sys-pass').value;
+            if(pass === "HCP9") { // Private Zone Password
+                document.getElementById('auth-overlay').style.display = 'none';
+                document.getElementById('secure-content').style.display = 'block';
+            } else {
+                document.getElementById('err').style.display = 'block';
+            }
+        }
+
+        // 36 Unique Student Codes
+        const studentCodes = [
+            "21001", "21002", "21003", "21004", "21005", "21006", "21007", "21008", "21009", "21010",
+            "22011", "22012", "22013", "22014", "22015", "22016", "22017", "22018", "22019", "22020",
+            "23021", "23022", "23023", "23024", "23025", "23026", "23027", "23028", "23029", "23030",
+            "24031", "24032", "24033", "24034", "24035", "24036"
+        ];
+
+        function submitVote() {
+            const code = document.getElementById('stu-code').value;
+            const status = document.getElementById('status');
+            
+            // Validation
+            if(!studentCodes.includes(code)) {
+                status.innerHTML = "<span style='color:red;'>INVALID AUTH CODE!</span>";
+                return;
+            }
+            if(localStorage.getItem('voted_' + code)) {
+                status.innerHTML = "<span style='color:yellow;'>DUPLICATE ENTRY DETECTED. ACCESS BLOCKED.</span>";
+                return;
+            }
+
+            // Logic for Rank Selection Check
+            const r1 = document.getElementById('r1').value;
+            const r2 = document.getElementById('r2').value;
+            const r3 = document.getElementById('r3').value;
+            
+            if(!r1 || !r2 || !r3) {
+                status.innerHTML = "<span style='color:orange;'>PLEASE FILL ALL RANKINGS.</span>";
+                return;
+            }
+
+            // Successful Submission
+            localStorage.setItem('voted_' + code, 'true');
+            status.innerHTML = "<span style='color:var(--neon-blue);'>DATA TRANSMITTED SUCCESSFULLY.</span>";
+            document.getElementById('ranking-form').reset();
+        }
+    </script>
+</body>
+</html>
