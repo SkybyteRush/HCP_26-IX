@@ -1,423 +1,285 @@
-/* ------------------------------------------- */
-/* ১. বেসিক সেটআপ ও ফন্ট             */
-/* ------------------------------------------- */
-body {
-    /* বাংলা লেখার জন্য Atma এবং ইংরেজি লেখার জন্য Handlee ফন্ট */
-    font-family: 'Atma', 'Handlee', cursive, sans-serif;
+/* PROJECT: HCP 2026 - THE GREEN HORIZON 
+   THEME: DARK GREY | NEON GREEN | SKY BLUE CLOUDS
+   ACCURACY: 100% ALIGNED & RESPONSIVE
+*/
+
+:root {
+    --bg-dark: #0f0f0f;
+    --neon-green: #39ff14;
+    --neon-glow: rgba(57, 255, 20, 0.4);
+    --sky-blue: #00d2ff;
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --card-border: rgba(255, 255, 255, 0.1);
+}
+
+* {
     margin: 0;
     padding: 0;
-    background-color: #f4fcf0; /* হালকা সবুজ/ক্রিম ব্যাকগ্রাউন্ড */
-    color: #333;
-    line-height: 1.6;
-    scroll-behavior: smooth; /* স্মুথ স্ক্রলিং */
+    box-sizing: border-box;
 }
 
-/* ফন্ট স্টাইল (শিরোনামের জন্য Atma ফন্ট) */
-h1, h2, h3 {
-    font-family: 'Atma', cursive, sans-serif; 
-    color: #006400; /* গাঢ় সবুজ */
+body {
+    background-color: var(--bg-dark);
+    font-family: 'Atma', cursive;
+    color: #ffffff;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+}
+
+/* ☁️ ভাসমান মেঘের ব্যাকগ্রাউন্ড (Animated) */
+.sky-background {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    z-index: -2;
+    background: radial-gradient(circle at center, #1a1a1a 0%, #0a0a0a 100%);
+}
+
+.cloud {
+    position: absolute;
+    background: var(--sky-blue);
+    border-radius: 100px;
+    filter: blur(60px);
+    opacity: 0.15;
+    animation: moveClouds linear infinite;
+}
+
+.c1 { width: 300px; height: 100px; top: 10%; left: -10%; animation-duration: 30s; }
+.c2 { width: 500px; height: 150px; top: 40%; left: -20%; animation-duration: 50s; }
+.c3 { width: 400px; height: 120px; top: 75%; left: -15%; animation-duration: 40s; }
+.c4 { width: 250px; height: 80px; top: 25%; right: -10%; animation-duration: 35s; }
+
+@keyframes moveClouds {
+    from { transform: translateX(-100%); }
+    to { transform: translateX(200vw); }
+}
+
+/* 🔝 লোগো ও নেভিগেশন */
+.logo-container {
     text-align: center;
-    padding-top: 20px;
+    padding: 50px 0 20px;
 }
 
-/* ------------------------------------------- */
-/* ২. টপ লোগো সেকশন              */
-/* ------------------------------------------- */
-.logo-top-container {
-    text-align: center; 
-    padding: 20px 0;
-    background-color: #ffffff; 
-    border-bottom: 2px solid #e0f2f1; 
+.main-logo-neon {
+    width: 180px;
+    border-radius: 50%;
+    box-shadow: 0 0 25px var(--neon-glow);
+    transition: 0.5s;
 }
 
-.main-logo {
-    max-width: 150px; 
-    height: auto;
-    display: block; 
-    margin: 0 auto; 
-    transition: transform 0.5s ease-in-out;
-}
-
-/* লোগো-তে একটি ছোট হোভার ইফেক্ট */
-.main-logo:hover {
-    transform: scale(1.05);
-}
-
-/* ------------------------------------------- */
-/* ৩. নেভিগেশন বার                    */
-/* ------------------------------------------- */
 header {
-    background-color: #008000; /* ফরেস্ট গ্রিন */
-    color: white;
-    padding: 10px 0;
-    position: sticky; 
-    top: 0;
+    position: sticky;
+    top: 20px;
     z-index: 1000;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); 
+    display: flex;
+    justify-content: center;
 }
 
 nav {
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--card-border);
+    padding: 12px 30px;
+    border-radius: 50px;
+}
+
+.nav-links {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
-nav h1 {
-    margin: 0;
-    color: white;
-    font-size: 1.5em;
-    padding-top: 0;
-    transition: color 0.3s;
-}
-
-nav ul {
     list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-}
-
-nav ul li a {
-    color: white;
-    text-decoration: none;
-    padding: 10px 15px;
-    display: block;
-    transition: all 0.3s;
-}
-
-nav ul li a:hover {
-    background-color: #38761d; 
-    border-radius: 20px; 
-    transform: translateY(-2px);
-}
-
-/* ------------------------------------------- */
-/* ৪. সেকশন এবং হিরো এরিয়া */
-/* ------------------------------------------- */
-
-/* ScrollReveal ব্যবহার করার কারণে পুরোনো fade-in ক্লাসটি দরকার নেই */
-.content-section {
-    padding: 60px 20px;
-    max-width: 1000px;
-    margin: 0 auto;
-    text-align: center;
-}
-
-
-/* হোম বিভাগ (হিরো সেকশন) */
-.hero-section {
-    background: linear-gradient(to bottom, #c3e6cb, #8fbc8f); 
-    color: #004d00;
-    padding: 100px 20px;
-    text-align: center;
-    min-height: 70vh; 
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    position: relative;
-    overflow: hidden; 
-}
-
-/* কাউন্টডাউন স্টাইল */
-.countdown-container {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    margin: 30px 0;
-    z-index: 1;
-}
-
-.time-box {
-    background-color: rgba(255, 255, 255, 0.95);
-    border: 3px solid #008000;
-    padding: 20px;
-    border-radius: 10px;
-    min-width: 120px;
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.25); 
-    transition: transform 0.3s ease;
-}
-
-/* কাউন্টডাউন বক্সের জন্য হোভার ইফেক্ট */
-.time-box:hover {
-    transform: scale(1.05);
-}
-
-/* ------------------------------------------- */
-/* ৫. মাস্টারমাইন্ড লেআউট ও কার্ড অ্যানিমেশন */
-/* ------------------------------------------- */
-
-/* মাস্টারমাইন্ড লেআউটের স্টাইল */
-.mastermind-container {
-    display: flex;
-    flex-direction: column; 
-    align-items: center; 
-    gap: 25px; 
-    margin-top: 30px;
-}
-.main-mastermind-row {
-    width: 100%;
-    display: flex;
-    justify-content: center; 
-    margin-bottom: 20px;
-}
-.co-mastermind-row {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap; 
     gap: 25px;
 }
 
-/* কার্ড স্টাইল */
-.mastermind-card {
-    background-color: #e6ffe6; 
-    border: 1px solid #8fbc8f; 
-    border-radius: 10px;
-    padding: 15px;
-    width: 220px; 
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    transition: transform 0.3s, box-shadow 0.3s;
-    cursor: pointer;
-}
-
-/* মাস্টারমাইন্ড কার্ডের জন্য পালস হোভার ইফেক্ট */
-.mastermind-card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-    animation: pulse 1s infinite alternate; 
-}
-
-@keyframes pulse {
-    from {
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-    }
-    to {
-        box-shadow: 0 12px 25px rgba(0, 128, 0, 0.5); 
-    }
-}
-
-.main-mastermind {
-    background-color: #ccffcc; 
-    border: 2px solid #006400;
-}
-
-/* ------------------------------------------- */
-/* ৬. গ্যালারি ও ফুটার              */
-/* ------------------------------------------- */
-.image-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 15px;
-    margin-top: 30px;
-}
-
-/* গ্যালারি মিডিয়া (ছবি এবং ভিডিও) স্টাইল */
-.gallery-media {
-    width: 100%;
-    /* 📸 ল্যান্ডস্কেপ অনুপাত (4/3) ফিক্স করা হয়েছে */
-    aspect-ratio: 4 / 3; 
-    height: 100%; 
-    object-fit: cover; /* ছবিটি যেন কেটে গেলেও পুরো বক্সটি ভরে থাকে */
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s, box-shadow 0.3s;
-    cursor: pointer;
-}
-
-.gallery-media:hover {
-    transform: scale(1.03);
-    box-shadow: 0 8px 16px rgba(0, 128, 0, 0.3); /* সবুজ হোভার শ্যাডো */
-}
-
-/* image-placeholder এর স্টাইল */
-.image-placeholder {
-    background-color: #d9ead3; 
-    border: 1px dashed #6aa84f;
-    padding: 50px 10px;
-    text-align: center;
-    /* 📸 ল্যান্ডস্কেপ অনুপাত (4/3) ফিক্স করা হয়েছে */
-    aspect-ratio: 4 / 3; 
-    height: 100%; 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #38761d;
-    font-size: 0.9em;
-    border-radius: 5px;
-    transition: background-color 0.3s;
-}
-
-footer {
-    background-color: #006400;
-    color: white;
-    text-align: center;
-    padding: 15px 0;
-    margin-top: 50px;
-}
-
-/* ------------------------------------------- */
-/* ৭. উন্নত গাছ এবং পাতা অ্যানিমেশন                */
-/* ------------------------------------------- */
-
-/* পাতা অ্যানিমেশন */
-@keyframes leaf-fall {
-    0% {
-        transform: translate(0, -10vh) rotate(0deg);
-        opacity: 0;
-    }
-    10% {
-        opacity: 1;
-    }
-    100% {
-        transform: translate(50px, 110vh) rotate(720deg); 
-        opacity: 0;
-    }
-}
-
-/* নতুন গাছ পতনের অ্যানিমেশন (ধীর, ঘূর্ণন কম) */
-@keyframes tree-fall {
-    0% {
-        transform: translate(0, -20vh) rotate(0deg) scale(0.5);
-        opacity: 0;
-    }
-    5% {
-        opacity: 1;
-    }
-    100% {
-        transform: translate(-100px, 110vh) rotate(-10deg) scale(0.5); 
-        opacity: 0;
-    }
-}
-
-/* পাতা অ্যানিমেশন প্রয়োগ */
-.hero-section::before,
-.hero-section::after {
-    content: '🍃'; 
-    position: absolute;
-    font-size: 2em;
-    animation: leaf-fall 15s linear infinite;
-    z-index: 0;
-}
-
-.hero-section::before {
-    left: 10%;
-    top: -10%;
-    animation-delay: 0s;
-    transform: scale(1.2);
-}
-
-.hero-section::after {
-    left: 80%;
-    top: -20%;
-    animation-duration: 20s;
-    animation-delay: 5s;
-    transform: scale(0.8);
-}
-
-/* অতিরিক্ত পাতা/উপাদান */
-.hero-section:nth-child(2)::before {
-    content: '🌿';
-    left: 30%;
-    top: -5%;
-    font-size: 1.5em;
-    animation-duration: 12s;
-    animation-delay: 3s;
-    animation-direction: reverse;
-}
-
-/* --- নতুন গাছের অ্যানিমেশন যোগ করা হলো --- */
-
-/* গাছ এলিমেন্ট ১ (বড়) */
-.hero-section:nth-child(3)::before {
-    content: '🌲'; /* পাইন গাছের ইমোজি */
-    position: absolute;
-    left: 5%;
-    top: -30%;
-    font-size: 4em; 
-    animation: tree-fall 30s linear infinite; /* ধীরগতির */
-    animation-delay: 10s; 
-    z-index: 0;
-    filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.2)); 
-}
-
-/* গাছ এলিমেন্ট ২ (ছোট চারা) */
-.hero-section:nth-child(3)::after {
-    content: '🌱'; /* ছোট চারা গাছ */
-    position: absolute;
-    right: 15%;
-    top: -40%;
-    font-size: 2.5em;
-    animation: leaf-fall 25s linear infinite; 
-    animation-delay: 15s; 
-    z-index: 0;
-    transform: scale(1.5);
-}
-
-/* ------------------------------------------- */
-/* ৮. Lightbox (পপ-আপ গ্যালারি) স্টাইল       */
-/* ------------------------------------------- */
-
-/* Lightbox ব্যাকগ্রাউন্ড এবং প্রাথমিক অবস্থা */
-.lightbox {
-    display: none; /* শুরুতে লুকিয়ে থাকবে */
-    position: fixed;
-    z-index: 2000; /* নিশ্চিত করতে হবে যে এটি সবকিছুর উপরে থাকে */
-    padding-top: 50px; 
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.95); /* কালো, সামান্য স্বচ্ছ ব্যাকগ্রাউন্ড */
-}
-
-/* বন্ধ করার বাটন (X) */
-.lightbox-close {
-    position: absolute;
-    top: 15px;
-    right: 35px;
-    color: #f1f1f1;
-    font-size: 40px;
+.nav-links a {
+    color: #fff;
+    text-decoration: none;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.9rem;
     font-weight: bold;
     transition: 0.3s;
-    cursor: pointer;
 }
 
-.lightbox-close:hover,
-.lightbox-close:focus {
-    color: #00ff00; /* হোভার করলে সবুজ হবে */
-    text-decoration: none;
+.nav-links a:hover, .private-link {
+    color: var(--neon-green);
+    text-shadow: 0 0 10px var(--neon-green);
 }
 
-/* কন্টেইনার, যা ছবি/ভিডিওটিকে মাঝখানে রাখবে */
-.lightbox-content {
-    margin: auto;
-    display: block;
-    width: 90%;
-    max-width: 900px;
-    height: auto;
-}
-
-/* Lightbox এর ভেতরে থাকা ছবি/ভিডিওর স্টাইল */
-.lightbox-content img,
-.lightbox-content video {
-    width: 100%;
-    max-height: 90vh; /* ভিউপোর্টের উচ্চতার ৯০% এর বেশি হবে না */
-    display: block;
+/* 🎯 হিরো সেকশন */
+.container {
+    max-width: 1100px;
     margin: 0 auto;
-    object-fit: contain; /* পুরো ছবিটি দেখাতে সাহায্য করে */
+    padding: 0 20px;
+    text-align: center;
 }
 
-/* Lightbox অ্যানিমেশন */
-.lightbox-content {
-    animation-name: zoom;
-    animation-duration: 0.6s;
+.hero {
+    padding: 100px 0;
 }
 
-@keyframes zoom {
-    from {transform: scale(0.1)} 
-    to {transform: scale(1)}
+.neon-text-main {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(2.5rem, 10vw, 5rem);
+    text-shadow: 0 0 20px var(--neon-green);
+    margin-bottom: 10px;
+}
+
+.theme-glow {
+    font-size: 1.2rem;
+    color: var(--sky-blue);
+    letter-spacing: 10px;
+    text-transform: uppercase;
+}
+
+/* 🕒 কাউন্টডাউন টাইমার */
+.neon-countdown {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 50px;
+    flex-wrap: wrap;
+}
+
+.time-box {
+    background: var(--glass-bg);
+    border: 1px solid var(--neon-green);
+    padding: 20px;
+    border-radius: 15px;
+    min-width: 100px;
+    backdrop-filter: blur(5px);
+}
+
+.time-box span {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2.5rem;
+    color: var(--neon-green);
+    display: block;
+}
+
+.time-box small {
+    font-size: 0.8rem;
+    color: #ccc;
+    text-transform: uppercase;
+}
+
+/* 🧠 মাস্টারমাইন্ডস (Team) */
+.section { padding: 80px 0; }
+.section-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2rem;
+    margin-bottom: 50px;
+    color: #fff;
+}
+
+.team-layout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+.card {
+    background: var(--glass-bg);
+    border: 1px solid var(--card-border);
+    padding: 25px;
+    border-radius: 20px;
+    transition: 0.3s;
+}
+
+.master-card {
+    width: 320px;
+    border: 2px solid var(--neon-green);
+    box-shadow: 0 0 20px var(--neon-glow);
+}
+
+.sub-team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    width: 100%;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    border-color: var(--neon-green);
+}
+
+/* 📸 গ্যালারি গ্রিড (Accurate) */
+.media-grid-accurate {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.media-item {
+    height: 250px;
+    border-radius: 15px;
+    overflow: hidden;
+    border: 1px solid var(--card-border);
+    background: #000;
+}
+
+.media-item img, .media-item video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: 0.5s;
+}
+
+.media-item:hover img { transform: scale(1.1); }
+
+/* 📩 RSVP বক্স (Fixed) */
+.rsvp-glass-box {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--neon-green);
+    padding: 50px;
+    border-radius: 30px;
+    max-width: 500px;
+    margin: 0 auto;
+    box-shadow: 0 0 30px var(--neon-glow);
+}
+
+.input-wrap { margin-bottom: 20px; }
+
+input, select {
+    width: 100%;
+    padding: 15px;
+    background: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 10px;
+    color: #fff;
+    font-family: 'Atma';
+}
+
+input:focus { border-color: var(--neon-green); outline: none; }
+
+.neon-submit-btn {
+    width: 100%;
+    padding: 15px;
+    background: transparent;
+    border: 2px solid var(--neon-green);
+    color: var(--neon-green);
+    font-family: 'Orbitron';
+    font-weight: 900;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: 0.3s;
+}
+
+.neon-submit-btn:hover {
+    background: var(--neon-green);
+    color: #000;
+    box-shadow: 0 0 30px var(--neon-green);
+}
+
+/* 📱 রেসপনসিভ */
+@media (max-width: 768px) {
+    .nav-links { gap: 15px; font-size: 0.7rem; }
+    .neon-text-main { font-size: 2.5rem; }
+    .theme-glow { font-size: 0.8rem; letter-spacing: 5px; }
+    .time-box { min-width: 80px; padding: 15px; }
+}
+
+.neon-hr {
+    border: none;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--neon-green), transparent);
+    margin: 40px 0;
 }
